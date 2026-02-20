@@ -24,6 +24,8 @@ export async function POST(req: Request) {
             return NextResponse.json({ message: 'Storage not configured' }, { status: 503 });
         }
 
+        const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
         if (buffer.length === 0) {
