@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/button'
 import {
   Users,
   BookOpen,

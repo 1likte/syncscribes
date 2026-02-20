@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/button'
 import { Crown, Star, Check, ArrowRight, BookOpen, Users, Zap, ShieldCheck, Heart, Sparkles } from 'lucide-react'
 
 export default function SubscriptionPage() {

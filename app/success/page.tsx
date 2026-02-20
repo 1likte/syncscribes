@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/button'
 import { CheckCircle, BookOpen, Download, Home } from 'lucide-react'
 import Link from 'next/link'
 

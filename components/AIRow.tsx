@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Play, Heart, BookOpen, Sparkles } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { usePaywall } from '@/hooks/usePaywall'
 

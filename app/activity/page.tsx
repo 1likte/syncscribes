@@ -1,7 +1,7 @@
 'use client';
 
-import { Button } from '@/components/ui/Button';
-import { Feed } from '@/components/feed/Feed';
+import { Button } from '@/components/ui/button';
+import { Feed } from '@/components/feed/feed';
 import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
