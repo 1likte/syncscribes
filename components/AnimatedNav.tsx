@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import Logo from '@/components/Logo';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { useTheme } from 'next-themes';
@@ -112,27 +113,7 @@ export default function AnimatedNav({ isSidebarOpen, onSidebarToggle }: Animated
             transition={{ duration: 0.3 }}
             className="md:pl-6 flex items-center justify-start z-[120] pointer-events-auto"
           >
-            <Link href="/" className="flex items-center gap-3">
-              <motion.div
-                className="relative cursor-pointer group flex items-center gap-3"
-                whileHover={{
-                  scale: 1.05,
-                  rotate: [0, -2, 2, -2, 0],
-                  transition: { duration: 0.4, ease: "easeInOut" }
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <div className="absolute -inset-2 bg-primary/40 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" />
-                <img
-                  src="/images/icon.png"
-                  alt="SyncScribes Logo"
-                  className="w-10 h-10 md:w-12 md:h-12 object-contain relative z-10"
-                />
-                <span className="relative text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 drop-shadow-[0_0_15px_rgba(6,182,212,0.5)] dark:drop-shadow-[0_0_25px_rgba(6,182,212,0.8)] filter">
-                  SyncScribes
-                </span>
-              </motion.div>
-            </Link>
+            <Logo size="md" />
           </motion.div>
 
           {/* Center - Search Bar */}

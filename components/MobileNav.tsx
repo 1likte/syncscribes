@@ -27,6 +27,7 @@ import {
     Plus
 } from 'lucide-react';
 import Link from 'next/link';
+import Logo from '@/components/Logo';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from 'next-themes';
@@ -113,7 +114,7 @@ export default function MobileNav() {
         { icon: PlaySquare, label: 'Browse', path: '/browse' },
         { icon: Video, label: 'SyncMeet', path: '/meet' },
         { icon: Library, label: 'My Library', path: '/collections' },
-        { icon: PenTool, label: 'Create Post', path: '/activity' }, // Linking to activity for post creation on mobile
+        { icon: PenTool, label: 'Paylaşım Yeri', path: '/blog' },
         { icon: Activity, label: 'Community Feed', path: '/activity' },
     ];
 
@@ -155,18 +156,7 @@ export default function MobileNav() {
                 <div className="flex items-center justify-between w-full relative z-[130]">
                     {/* Logo Section - Fades out slightly when searching for more space */}
                     <div className={`transition-all duration-500 ${showSearch ? 'opacity-0 scale-95 pointer-events-none w-0 h-0 overflow-hidden' : 'opacity-100 scale-100'}`}>
-                        <Link href="/" className="flex items-center gap-2.5 group">
-                            <motion.div
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="relative w-8 h-8 flex items-center justify-center"
-                            >
-                                <img src="/images/icon.png" alt="S" className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(var(--primary-rgb),0.4)]" />
-                            </motion.div>
-                            <span className="text-lg font-black tracking-tighter bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(var(--primary-rgb),0.2)]">
-                                SyncScribes
-                            </span>
-                        </Link>
+                        <Logo size="sm" />
                     </div>
 
                     {/* Search & Actions Container */}

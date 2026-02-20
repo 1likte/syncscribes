@@ -31,8 +31,9 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         { icon: PlaySquare, label: 'Browse', href: '/browse' },
         { icon: Video, label: 'SyncMeet', href: '/meet' },
         { icon: Library, label: 'My Library', href: '/collections' },
+        { icon: PenTool, label: 'Paylaşım Yeri', href: '/blog' },
         {
-            icon: PenTool,
+            icon: PlusSquare,
             label: 'Create Post',
             onClick: () => setIsCreatePostOpen(true)
         },

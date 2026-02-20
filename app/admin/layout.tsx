@@ -11,7 +11,8 @@ import {
     LogOut,
     ShieldCheck,
     Menu,
-    X
+    X,
+    PenTool
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -23,6 +24,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { name: 'Dashboard', icon: LayoutDashboard, href: '/admin' },
         { name: 'Users', icon: Users, href: '/admin/users' },
         { name: 'Books', icon: BookOpen, href: '/admin/books' },
+        { name: 'Paylaşım Yeri', icon: PenTool, href: '/admin/shares' },
         { name: 'Settings', icon: Settings, href: '/admin/settings' },
     ]
 
