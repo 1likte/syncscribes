@@ -253,8 +253,8 @@ export default function MobileNav() {
                 )}
             </AnimatePresence>
 
-            {/* Bottom Tab Bar */}
-            <nav className="fixed bottom-0 left-0 right-0 z-[110] bg-transparent h-20 sm:hidden flex items-center justify-around px-4 pb-safe">
+            {/* Bottom Tab Bar - Enhanced Neon Effect */}
+            <nav className="fixed bottom-0 left-0 right-0 z-[110] bg-background/80 dark:bg-background/60 backdrop-blur-xl border-t border-foreground/5 h-20 sm:hidden flex items-center justify-around px-4 pb-safe shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.3)]">
                 <div className="absolute inset-x-0 -bottom-20 -top-20 pointer-events-none">
                     <ParticleEffect count={15} />
                 </div>
@@ -265,28 +265,74 @@ export default function MobileNav() {
                     return (
                         <Link key={item.path} href={item.path} className="relative flex flex-col items-center justify-center w-full h-full py-4 z-10">
                             <motion.div
-                                whileTap={{ scale: 0.8 }}
+                                whileTap={{ scale: 0.85 }}
+                                whileHover={{ scale: 1.05 }}
                                 className="flex flex-col items-center gap-1.5"
                             >
                                 <div className="relative">
+                                    {/* Enhanced Neon Glow Effect */}
                                     {isActive && (
-                                        <motion.div
-                                            layoutId="neonGlow"
-                                            className={`absolute -inset-4 rounded-full blur-[20px] pointer-events-none ${item.glow}`}
-                                        />
+                                        <>
+                                            <motion.div
+                                                layoutId="neonGlow"
+                                                className={`absolute -inset-5 rounded-full blur-[25px] opacity-80 ${item.glow}`}
+                                                animate={{
+                                                    scale: [1, 1.2, 1],
+                                                    opacity: [0.6, 0.9, 0.6]
+                                                }}
+                                                transition={{
+                                                    duration: 2,
+                                                    repeat: Infinity,
+                                                    ease: "easeInOut"
+                                                }}
+                                            />
+                                            <motion.div
+                                                className={`absolute -inset-3 rounded-full blur-[15px] ${item.glow}`}
+                                                animate={{
+                                                    scale: [1, 1.1, 1],
+                                                    opacity: [0.8, 1, 0.8]
+                                                }}
+                                                transition={{
+                                                    duration: 1.5,
+                                                    repeat: Infinity,
+                                                    ease: "easeInOut"
+                                                }}
+                                            />
+                                        </>
                                     )}
-                                    <Icon
-                                        size={22}
-                                        strokeWidth={isActive ? 2.5 : 2}
-                                        className={`transition-all duration-300 ${isActive ? item.color : 'text-white/30'}`}
-                                        style={isActive ? { filter: 'drop-shadow(0 0 8px currentColor)' } : {}}
-                                    />
+                                    <motion.div
+                                        animate={isActive ? {
+                                            y: [0, -2, 0],
+                                        } : {}}
+                                        transition={{
+                                            duration: 2,
+                                            repeat: Infinity,
+                                            ease: "easeInOut"
+                                        }}
+                                    >
+                                        <Icon
+                                            size={24}
+                                            strokeWidth={isActive ? 2.5 : 2}
+                                            className={`transition-all duration-300 relative z-10 ${isActive ? item.color : 'text-foreground/30'}`}
+                                            style={isActive ? { 
+                                                filter: 'drop-shadow(0 0 12px currentColor) drop-shadow(0 0 4px currentColor)',
+                                            } : {}}
+                                        />
+                                    </motion.div>
                                 </div>
+                                {/* Label */}
+                                <span className={`text-[9px] font-black uppercase tracking-wider transition-all duration-300 ${isActive ? item.color + ' opacity-100' : 'text-foreground/30 opacity-60'}`}>
+                                    {item.label}
+                                </span>
                             </motion.div>
+                            {/* Top Indicator Line */}
                             {isActive && (
                                 <motion.div
                                     layoutId="activeTabIndicator"
-                                    className={`absolute top-0 w-12 h-[3px] rounded-full shadow-[0_0_20px_rgba(255,255,255,0.5)] ${item.glow.replace('bg-', 'bg-').replace('/30', '')}`}
+                                    className={`absolute top-0 w-16 h-[3px] rounded-full ${item.glow.replace('bg-', 'bg-').replace('/30', '')}`}
+                                    style={{
+                                        boxShadow: `0 0 20px currentColor, 0 0 10px currentColor`
+                                    }}
                                 />
                             )}
                         </Link>
