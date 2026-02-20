@@ -253,10 +253,10 @@ export default function MobileNav() {
                 )}
             </AnimatePresence>
 
-            {/* Bottom Tab Bar - Enhanced Neon Effect */}
-            <nav className="fixed bottom-0 left-0 right-0 z-[110] bg-background/80 dark:bg-background/60 backdrop-blur-xl border-t border-foreground/5 h-20 sm:hidden flex items-center justify-around px-4 pb-safe shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.3)]">
-                <div className="absolute inset-x-0 -bottom-20 -top-20 pointer-events-none">
-                    <ParticleEffect count={15} />
+            {/* Bottom Tab Bar - Seamless Floating Buttons */}
+            <nav className="fixed bottom-0 left-0 right-0 z-[110] bg-transparent h-20 sm:hidden flex items-center justify-around px-4 pb-safe">
+                <div className="absolute inset-x-0 -bottom-20 -top-20 pointer-events-none opacity-30">
+                    <ParticleEffect count={12} />
                 </div>
 
                 {navItems.map((item) => {
@@ -275,25 +275,25 @@ export default function MobileNav() {
                                         <>
                                             <motion.div
                                                 layoutId="neonGlow"
-                                                className={`absolute -inset-5 rounded-full blur-[25px] opacity-80 ${item.glow}`}
+                                                className={`absolute -inset-6 rounded-full blur-[30px] opacity-70 ${item.glow}`}
                                                 animate={{
-                                                    scale: [1, 1.2, 1],
-                                                    opacity: [0.6, 0.9, 0.6]
+                                                    scale: [1, 1.3, 1],
+                                                    opacity: [0.5, 0.8, 0.5]
                                                 }}
                                                 transition={{
-                                                    duration: 2,
+                                                    duration: 2.5,
                                                     repeat: Infinity,
                                                     ease: "easeInOut"
                                                 }}
                                             />
                                             <motion.div
-                                                className={`absolute -inset-3 rounded-full blur-[15px] ${item.glow}`}
+                                                className={`absolute -inset-4 rounded-full blur-[18px] ${item.glow}`}
                                                 animate={{
-                                                    scale: [1, 1.1, 1],
-                                                    opacity: [0.8, 1, 0.8]
+                                                    scale: [1, 1.15, 1],
+                                                    opacity: [0.7, 1, 0.7]
                                                 }}
                                                 transition={{
-                                                    duration: 1.5,
+                                                    duration: 1.8,
                                                     repeat: Infinity,
                                                     ease: "easeInOut"
                                                 }}
@@ -302,54 +302,113 @@ export default function MobileNav() {
                                     )}
                                     <motion.div
                                         animate={isActive ? {
-                                            y: [0, -2, 0],
+                                            y: [0, -3, 0],
                                         } : {}}
                                         transition={{
-                                            duration: 2,
+                                            duration: 2.2,
                                             repeat: Infinity,
                                             ease: "easeInOut"
                                         }}
                                     >
                                         <Icon
                                             size={24}
-                                            strokeWidth={isActive ? 2.5 : 2}
-                                            className={`transition-all duration-300 relative z-10 ${isActive ? item.color : 'text-foreground/30'}`}
+                                            strokeWidth={isActive ? 3 : 2}
+                                            className={`transition-all duration-300 relative z-10 ${isActive ? item.color : 'text-foreground/40'}`}
                                             style={isActive ? { 
-                                                filter: 'drop-shadow(0 0 12px currentColor) drop-shadow(0 0 4px currentColor)',
+                                                filter: 'drop-shadow(0 0 14px currentColor) drop-shadow(0 0 6px currentColor)',
                                             } : {}}
                                         />
                                     </motion.div>
                                 </div>
-                                {/* Label */}
-                                <span className={`text-[9px] font-black uppercase tracking-wider transition-all duration-300 ${isActive ? item.color + ' opacity-100' : 'text-foreground/30 opacity-60'}`}>
-                                    {item.label}
-                                </span>
+                                {/* Label - Only for active */}
+                                {isActive && (
+                                    <motion.span 
+                                        initial={{ opacity: 0, y: -5 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        className={`text-[9px] font-black uppercase tracking-wider transition-all duration-300 ${item.color}`}
+                                        style={{ 
+                                            textShadow: '0 0 10px currentColor',
+                                        }}
+                                    >
+                                        {item.label}
+                                    </motion.span>
+                                )}
                             </motion.div>
-                            {/* Top Indicator Line */}
-                            {isActive && (
-                                <motion.div
-                                    layoutId="activeTabIndicator"
-                                    className={`absolute top-0 w-16 h-[3px] rounded-full ${item.glow.replace('bg-', 'bg-').replace('/30', '')}`}
-                                    style={{
-                                        boxShadow: `0 0 20px currentColor, 0 0 10px currentColor`
-                                    }}
-                                />
-                            )}
                         </Link>
                     );
                 })}
 
-                {/* Grid Button - Mirroring Web Sidebar Logic */}
+                {/* Grid Button - Seamless with neon effect when active */}
                 <button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    className="relative flex items-center justify-center w-full h-full bg-transparent border-none z-10"
+                    className="relative flex items-center justify-center w-full h-full bg-transparent border-none z-10 py-4"
                 >
                     <motion.div
-                        whileTap={{ scale: 0.8 }}
-                        animate={{ scale: isMenuOpen ? 1.1 : 1 }}
-                        className={`flex items-center justify-center transition-all bg-transparent ${isMenuOpen ? 'text-primary' : 'text-foreground/40'}`}
+                        whileTap={{ scale: 0.85 }}
+                        whileHover={{ scale: 1.05 }}
+                        className="flex flex-col items-center gap-1.5"
                     >
-                        <Menu size={24} strokeWidth={isMenuOpen ? 2.5 : 2} className={isMenuOpen ? 'text-primary drop-shadow-[0_0_10px_rgba(var(--primary-rgb),0.8)]' : 'drop-shadow-[0_0_3px_rgba(255,255,255,0.1)] hover:text-foreground/80 transition-colors'} />
+                        <div className="relative">
+                            {isMenuOpen && (
+                                <>
+                                    <motion.div
+                                        className="absolute -inset-6 rounded-full blur-[30px] opacity-70 bg-primary/30"
+                                        animate={{
+                                            scale: [1, 1.3, 1],
+                                            opacity: [0.5, 0.8, 0.5]
+                                        }}
+                                        transition={{
+                                            duration: 2.5,
+                                            repeat: Infinity,
+                                            ease: "easeInOut"
+                                        }}
+                                    />
+                                    <motion.div
+                                        className="absolute -inset-4 rounded-full blur-[18px] bg-primary/30"
+                                        animate={{
+                                            scale: [1, 1.15, 1],
+                                            opacity: [0.7, 1, 0.7]
+                                        }}
+                                        transition={{
+                                            duration: 1.8,
+                                            repeat: Infinity,
+                                            ease: "easeInOut"
+                                        }}
+                                    />
+                                </>
+                            )}
+                            <motion.div
+                                animate={isMenuOpen ? {
+                                    y: [0, -3, 0],
+                                } : {}}
+                                transition={{
+                                    duration: 2.2,
+                                    repeat: Infinity,
+                                    ease: "easeInOut"
+                                }}
+                            >
+                                <Menu 
+                                    size={24} 
+                                    strokeWidth={isMenuOpen ? 3 : 2} 
+                                    className={`transition-all duration-300 relative z-10 ${isMenuOpen ? 'text-primary' : 'text-foreground/40'}`}
+                                    style={isMenuOpen ? { 
+                                        filter: 'drop-shadow(0 0 14px currentColor) drop-shadow(0 0 6px currentColor)',
+                                    } : {}}
+                                />
+                            </motion.div>
+                        </div>
+                        {isMenuOpen && (
+                            <motion.span 
+                                initial={{ opacity: 0, y: -5 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="text-[9px] font-black uppercase tracking-wider text-primary"
+                                style={{ 
+                                    textShadow: '0 0 10px currentColor',
+                                }}
+                            >
+                                MENU
+                            </motion.span>
+                        )}
                     </motion.div>
                 </button>
             </nav>
