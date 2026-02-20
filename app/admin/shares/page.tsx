@@ -29,8 +29,8 @@ interface SharePost {
 }
 
 const TYPES = [
-    { value: 'TEXT', label: 'Yazı', icon: FileText },
-    { value: 'IMAGE', label: 'Görsel', icon: Image },
+    { value: 'TEXT', label: 'Text', icon: FileText },
+    { value: 'IMAGE', label: 'Image', icon: Image },
     { value: 'VIDEO', label: 'Video Link', icon: Video },
     { value: 'LINK', label: 'Link', icon: Link2 },
 ];
@@ -108,7 +108,7 @@ export default function AdminSharesPage() {
                 fd.append('file', imageFile);
                 fd.append('type', 'cover');
                 const up = await fetch('/api/upload', { method: 'POST', body: fd });
-                if (!up.ok) throw new Error('Görsel yüklenemedi');
+                if (!up.ok) throw new Error('Image upload failed');
                 const { url } = await up.json();
                 imageUrl = url;
             }
@@ -129,36 +129,36 @@ export default function AdminSharesPage() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload),
                 });
-                if (!res.ok) throw new Error((await res.json()).message || 'Güncelleme başarısız');
+                if (!res.ok) throw new Error((await res.json()).message || 'Update failed');
             } else {
                 const res = await fetch('/api/shares', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload),
                 });
-                if (!res.ok) throw new Error((await res.json()).message || 'Oluşturma başarısız');
+                if (!res.ok) throw new Error((await res.json()).message || 'Create failed');
             }
 
             resetForm();
             fetchPosts();
-        } catch (err: any) {
-            alert(err.message || 'Bir hata oluştu');
+            } catch (err: any) {
+            alert(err.message || 'Something went wrong');
         } finally {
             setSubmitting(false);
         }
     };
 
     const handleDelete = async (id: string) => {
-        if (!confirm('Bu paylaşımı silmek istediğinize emin misiniz?')) return;
+        if (!confirm('Are you sure you want to delete this post?')) return;
         try {
             const res = await fetch(`/api/shares/${id}`, { method: 'DELETE' });
             if (res.ok) {
                 setPosts(posts.filter((p) => p.id !== id));
             } else {
-                alert('Silme başarısız');
+                alert('Delete failed');
             }
         } catch (e) {
-            alert('Bir hata oluştu');
+            alert('Something went wrong');
         }
     };
 
@@ -177,7 +177,7 @@ export default function AdminSharesPage() {
                 );
             }
         } catch (e) {
-            alert('Güncelleme başarısız');
+            alert('Update failed');
         }
     };
 
@@ -186,7 +186,7 @@ export default function AdminSharesPage() {
             <div className="flex flex-col items-center justify-center py-20 gap-4">
                 <Loader2 className="animate-spin text-purple-600" size={40} />
                 <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">
-                    Yükleniyor...
+                    Loading...
                 </p>
             </div>
         );
@@ -196,7 +196,7 @@ export default function AdminSharesPage() {
         <div className="space-y-8">
             <div className="flex items-center justify-between">
                 <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                    Paylaşım <span className="text-purple-600">Yeri</span>
+                    Sharing <span className="text-purple-600">Hub</span>
                 </h1>
                 <button
                     onClick={() => {
@@ -206,13 +206,13 @@ export default function AdminSharesPage() {
                     className="flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold text-sm shadow-lg shadow-purple-600/20 transition-all active:scale-95"
                 >
                     <Plus size={16} />
-                    Yeni Paylaşım
+                    New Post
                 </button>
             </div>
 
             <p className="text-slate-500 dark:text-white/50 text-sm">
-                Buradan eklediğiniz içerikler <strong>/blog</strong> sayfasında (kalem ikonu) görünür.
-                Video linki, uzun yazı (2000 kelime), link veya görsel paylaşabilirsiniz.
+                Content you add here appears on the <strong>/blog</strong> page (pen icon).
+                You can share video links, long text (up to 2000 words), links or images.
             </p>
 
             {posts.length === 0 ? (
@@ -223,7 +223,7 @@ export default function AdminSharesPage() {
                         onClick={() => setShowModal(true)}
                         className="mt-4 text-purple-600 font-bold hover:underline"
                     >
-                        İlk paylaşımı ekle
+                        Add first post
                     </button>
                 </div>
             ) : (
@@ -249,7 +249,7 @@ export default function AdminSharesPage() {
                                         </h3>
                                         <p className="text-xs text-slate-500 dark:text-white/40">
                                             {post.type} • {new Date(post.createdAt).toLocaleDateString('tr-TR')}
-                                            {post.isHidden && ' • Gizli'}
+                                            {post.isHidden && ' • Hidden'}
                                         </p>
                                     </div>
                                 </div>
@@ -286,7 +286,7 @@ export default function AdminSharesPage() {
                     <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                         <div className="p-6 border-b border-slate-200 dark:border-white/10 flex items-center justify-between">
                             <h2 className="text-xl font-black text-slate-900 dark:text-white">
-                                {editingId ? 'Paylaşımı Düzenle' : 'Yeni Paylaşım'}
+                                {editingId ? 'Edit Post' : 'New Post'}
                             </h2>
                             <button
                                 onClick={resetForm}
@@ -298,7 +298,7 @@ export default function AdminSharesPage() {
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
                             <div>
                                 <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-2">
-                                    İçerik Tipi
+                                    Content Type
                                 </label>
                                 <div className="flex gap-2 flex-wrap">
                                     {TYPES.map((t) => (
@@ -321,21 +321,21 @@ export default function AdminSharesPage() {
 
                             <div>
                                 <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-2">
-                                    Başlık (opsiyonel)
+                                    Title (optional)
                                 </label>
                                 <input
                                     type="text"
                                     value={form.title}
                                     onChange={(e) => setForm({ ...form, title: e.target.value })}
                                     className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-white/10 bg-transparent"
-                                    placeholder="Örn: Harika bir makale"
+                                    placeholder="e.g. Great article"
                                 />
                             </div>
 
                             {form.type === 'IMAGE' && (
                                 <div>
                                     <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-2">
-                                        Görsel
+                                        Image
                                     </label>
                                     <input
                                         type="file"
@@ -352,7 +352,7 @@ export default function AdminSharesPage() {
                             {form.type === 'VIDEO' && (
                                 <div>
                                     <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-2">
-                                        Video URL (YouTube vb.)
+                                        Video URL (YouTube, etc.)
                                     </label>
                                     <input
                                         type="url"
@@ -381,17 +381,17 @@ export default function AdminSharesPage() {
 
                             <div>
                                 <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-2">
-                                    İçerik *
+                                    Content *
                                 </label>
                                 <textarea
                                     value={form.content}
                                     onChange={(e) => setForm({ ...form, content: e.target.value })}
                                     className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-white/10 bg-transparent min-h-[120px]"
-                                    placeholder="Yazı, açıklama veya metin (2000 kelimeye kadar)"
+                                    placeholder="Text, description (up to ~2000 words)"
                                     maxLength={12000}
                                 />
                                 <p className="text-xs text-slate-400 mt-1">
-                                    {form.content.length} / 12000 karakter
+                                    {form.content.length} / 12000 characters
                                 </p>
                             </div>
 
@@ -404,7 +404,7 @@ export default function AdminSharesPage() {
                                     className="rounded"
                                 />
                                 <label htmlFor="isHidden" className="text-sm font-bold text-slate-600 dark:text-white/70">
-                                    Gizli (sadece admin görür)
+                                    Hidden (only visible to admin)
                                 </label>
                             </div>
 
@@ -415,14 +415,14 @@ export default function AdminSharesPage() {
                                     className="flex-1 flex items-center justify-center gap-2 py-3 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white rounded-xl font-bold"
                                 >
                                     {submitting ? <Loader2 size={18} className="animate-spin" /> : null}
-                                    {editingId ? 'Güncelle' : 'Paylaş'}
+                                    {editingId ? 'Update' : 'Publish'}
                                 </button>
                                 <button
                                     type="button"
                                     onClick={resetForm}
                                     className="px-6 py-3 rounded-xl border border-slate-200 dark:border-white/10 font-bold hover:bg-slate-100 dark:hover:bg-white/5"
                                 >
-                                    İptal
+                                    Cancel
                                 </button>
                             </div>
                         </form>

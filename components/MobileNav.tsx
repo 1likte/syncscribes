@@ -114,7 +114,7 @@ export default function MobileNav() {
         { icon: PlaySquare, label: 'Browse', path: '/browse' },
         { icon: Video, label: 'SyncMeet', path: '/meet' },
         { icon: Library, label: 'My Library', path: '/collections' },
-        { icon: PenTool, label: 'Paylaşım Yeri', path: '/blog' },
+        { icon: PenTool, label: 'Sharing', path: '/blog' },
         { icon: Activity, label: 'Community Feed', path: '/activity' },
     ];
 

@@ -86,7 +86,7 @@ export default function AIHero({ newestBooks = [] }: HeroProps) {
                 className="text-4xl md:text-6xl lg:text-8xl font-black text-foreground mb-8 lg:mb-12 leading-[1.1] tracking-tighter"
               >
                 FUTURE OF <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 animate-gradient-x">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 via-slate-300 to-slate-400 dark:from-slate-300 dark:via-white dark:to-slate-300">
                   READING IS HERE
                 </span>
               </motion.h1>
@@ -98,7 +98,7 @@ export default function AIHero({ newestBooks = [] }: HeroProps) {
                 className="flex justify-center lg:justify-start"
               >
                 <Link href="/browse">
-                  <Button size="lg" className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white px-8 lg:px-10 py-6 lg:py-7 text-base lg:text-lg group rounded-2xl shadow-xl transition-all hover:scale-105 active:scale-95">
+                  <Button size="lg" className="bg-slate-700 hover:bg-slate-600 dark:bg-slate-600 dark:hover:bg-slate-500 text-white px-8 lg:px-10 py-6 lg:py-7 text-base lg:text-lg group rounded-2xl shadow-lg transition-all hover:scale-105 active:scale-95">
                     <Brain className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
                     Start Reading
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -124,9 +124,9 @@ export default function AIHero({ newestBooks = [] }: HeroProps) {
                   className="relative group cursor-pointer w-full max-w-[400px]"
                   onClick={() => router.push(`/read/${displayBook.id}`)}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-500" />
+                  <div className="absolute inset-0 bg-slate-500/10 dark:bg-white/5 rounded-3xl blur-xl transition-all duration-500" />
 
-                  <div className="relative bg-card/40 backdrop-blur-xl rounded-[2.5rem] p-6 lg:p-8 shadow-2xl border border-white/10 group-hover:border-white/20 transition-colors">
+                  <div className="relative bg-card/40 backdrop-blur-xl rounded-[2.5rem] p-6 lg:p-8 shadow-xl border border-slate-200/50 dark:border-white/10 group-hover:border-slate-300/50 dark:group-hover:border-white/20 transition-colors">
                     <div className="aspect-[3/4] bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl mb-6 flex items-center justify-center overflow-hidden shadow-inner">
                       {displayBook.coverImage && !displayBook.coverImage.includes('placeholder') ? (
                         <img
@@ -157,7 +157,7 @@ export default function AIHero({ newestBooks = [] }: HeroProps) {
                           <Star className="w-4 h-4 text-yellow-500 fill-current" />
                           <span className="text-white text-xs lg:text-sm font-black tracking-tighter">{displayBook.averageRating || 5.0}</span>
                         </div>
-                        <span className="text-primary text-[9px] font-black uppercase tracking-[0.2em] bg-primary/10 px-2 py-0.5 rounded-full">
+                        <span className="text-slate-400 dark:text-white/50 text-[9px] font-black uppercase tracking-[0.2em] bg-slate-500/10 dark:bg-white/5 px-2 py-0.5 rounded-full">
                           {typeof displayBook.category === 'object' ? displayBook.category.name : (displayBook.category || 'Featured')}
                         </span>
                       </div>

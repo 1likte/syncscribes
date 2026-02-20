@@ -20,20 +20,27 @@ export async function POST(req: Request) {
         if (!file) {
             return NextResponse.json({ message: 'No file provided' }, { status: 400 });
         }
-
-        const supabase = createClient(supabaseUrl, supabaseServiceKey);
+        if (!supabaseUrl || !supabaseServiceKey) {
+            return NextResponse.json({ message: 'Storage not configured' }, { status: 503 });
+        }
 
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
+        if (buffer.length === 0) {
+            return NextResponse.json({ message: 'File is empty' }, { status: 400 });
+        }
 
         const bucket = type === 'cover' ? 'book-covers' : 'book-files';
-        const fileName = `${Date.now()}-${file.name.replace(/\s+/g, '_')}`;
-        const filePath = `${session.user.id}/${fileName}`;
+        const safeId = (session.user as any).id?.replace?.(/[^a-zA-Z0-9-_]/g, '') || 'uploads';
+        const fileName = `${Date.now()}-${(file.name || 'file').replace(/\s+/g, '_').slice(-80)}`;
+        const filePath = `${safeId}/${fileName}`;
 
-        const { data, error } = await supabase.storage
+        const contentType = file.type || (type === 'cover' ? 'image/jpeg' : 'application/pdf');
+
+        const { error } = await supabase.storage
             .from(bucket)
             .upload(filePath, buffer, {
-                contentType: file.type,
+                contentType,
                 upsert: false,
             });
 

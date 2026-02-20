@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
+import Logo from '@/components/Logo';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Mic,
@@ -218,7 +219,10 @@ export default function MeetPage() {
     // --- LANDING / PRE-JOIN SCREEN ---
     if (!isJoined) {
         return (
-            <div className="fixed inset-0 bg-background dark:bg-[#0c0c0e] flex items-start md:items-center justify-center p-6 pt-20 md:pt-6 z-[200]">
+            <div className="fixed inset-0 bg-background dark:bg-[#0c0c0e] flex flex-col items-center justify-start md:justify-center p-6 pt-6 md:pt-6 z-[200]">
+                <header className="fixed top-0 left-0 right-0 z-[210] flex items-center justify-between px-6 h-16 bg-transparent">
+                    <Logo size="sm" />
+                </header>
                 <ParticleEffect count={20} />
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -287,6 +291,9 @@ export default function MeetPage() {
     if (isMobile) {
         return (
             <div className="fixed inset-0 bg-background dark:bg-black z-[200] overflow-hidden font-['Poppins',sans-serif]">
+                <header className="fixed top-0 left-0 right-0 z-[210] flex items-center justify-between px-4 h-14 bg-transparent">
+                    <Logo size="sm" />
+                </header>
                 <ParticleEffect count={10} />
                 <AnimatePresence mode="wait">
                     <motion.div
@@ -435,7 +442,10 @@ export default function MeetPage() {
 
     // --- MAIN MEET UI (WEB) ---
     return (
-        <div className="fixed inset-0 bg-background dark:bg-[#0c0c0e] text-foreground dark:text-white overflow-hidden font-['Inter',sans-serif] pt-20">
+        <div className="fixed inset-0 bg-background dark:bg-[#0c0c0e] text-foreground dark:text-white overflow-hidden font-['Inter',sans-serif] pt-16">
+            <header className="fixed top-0 left-0 right-0 z-[210] flex items-center justify-between px-6 h-16 bg-transparent">
+                <Logo size="sm" />
+            </header>
             <ParticleEffect count={15} />
 
             {/* Background Decor */}

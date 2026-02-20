@@ -49,18 +49,18 @@ export default function BlogPage() {
             <div className="max-w-2xl mx-auto px-4">
                 <div className="mb-12">
                     <h1 className="text-3xl md:text-4xl font-black text-foreground uppercase tracking-tight">
-                        Paylaşım <span className="text-primary">Yeri</span>
+                        Sharing <span className="text-primary">Hub</span>
                     </h1>
                     <p className="text-foreground/50 text-sm mt-2 font-medium">
-                        Video, yazı, link ve görseller
+                        Videos, text, links and images
                     </p>
                 </div>
 
                 {posts.length === 0 ? (
                     <div className="text-center py-20 text-foreground/40">
                         <FileText size={48} className="mx-auto mb-4 opacity-50" />
-                        <p className="font-bold uppercase tracking-widest text-sm">Henüz paylaşım yok</p>
-                        <p className="text-xs mt-2">Yakında içerik eklenecek.</p>
+                        <p className="font-bold uppercase tracking-widest text-sm">No posts yet</p>
+                        <p className="text-xs mt-2">Content will appear here soon.</p>
                     </div>
                 ) : (
                     <div className="space-y-8">

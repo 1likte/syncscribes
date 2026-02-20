@@ -71,6 +71,7 @@ model User {
   reviews              Review[]
   savedPosts           SavedPost[]
   bookComments         BookComment[]
+  stories              Story[]
 
   @@map("users")
 }
@@ -399,4 +400,15 @@ model SharePost {
   updatedAt DateTime @updatedAt
 
   @@map("share_posts")
+}
+
+model Story {
+  id        String   @id @default(cuid())
+  userId    String
+  imageUrl  String
+  text      String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("stories")
 }
