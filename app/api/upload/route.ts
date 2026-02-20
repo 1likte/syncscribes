@@ -26,7 +26,7 @@ export async function POST(req: Request) {
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
 
-        const bucket = type === 'cover' ? 'covers' : 'books';
+        const bucket = type === 'cover' ? 'book-covers' : 'book-files';
         const fileName = `${Date.now()}-${file.name.replace(/\s+/g, '_')}`;
         const filePath = `${session.user.id}/${fileName}`;
 
