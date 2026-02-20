@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 import { BookOpen, Users, Zap } from 'lucide-react'
 import Link from 'next/link'
 

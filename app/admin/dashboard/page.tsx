@@ -3,14 +3,14 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Button } from '@/components/ui/button'
-import { 
-  Users, 
-  BookOpen, 
-  TrendingUp, 
-  DollarSign, 
-  Settings, 
-  LogOut, 
+import { Button } from '@/components/ui/Button'
+import {
+  Users,
+  BookOpen,
+  TrendingUp,
+  DollarSign,
+  Settings,
+  LogOut,
   Plus,
   Edit,
   Trash2,
@@ -117,7 +117,7 @@ export default function AdminDashboard() {
   const fetchData = async () => {
     try {
       setLoading(true)
-      
+
       // Fetch books
       const booksRes = await fetch('/api/admin/books')
       if (booksRes.ok) {
@@ -133,9 +133,9 @@ export default function AdminDashboard() {
           const usersData = await usersRes.json()
           setUsers(usersData)
           setStats(prev => ({ ...prev, totalUsers: usersData.length }))
-          
+
           // Calculate active subscriptions
-          const activeSubs = usersData.reduce((sum: number, user: User) => 
+          const activeSubs = usersData.reduce((sum: number, user: User) =>
             sum + (user._count?.subscriptions || 0), 0)
           setStats(prev => ({ ...prev, activeSubscriptions: activeSubs }))
         }
@@ -182,12 +182,12 @@ export default function AdminDashboard() {
 
   const handleSaveBook = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!bookForm.authorId) {
       alert('Please wait for author ID to load, or enter it manually')
       return
     }
-    
+
     try {
       const formData = new FormData()
       formData.append('title', bookForm.title)
@@ -200,7 +200,7 @@ export default function AdminDashboard() {
         formData.append('file', bookFile)
       }
 
-      const url = editingBook 
+      const url = editingBook
         ? `/api/admin/books/${editingBook.id}`
         : '/api/admin/books'
       const method = editingBook ? 'PUT' : 'POST'
@@ -277,7 +277,7 @@ export default function AdminDashboard() {
     try {
       const banDate = new Date()
       banDate.setDate(banDate.getDate() + days)
-      
+
       const response = await fetch(`/api/admin/users/${userId}`, {
         method: 'PUT',
         headers: {
@@ -343,11 +343,11 @@ export default function AdminDashboard() {
     }
   }
 
-  const StatCard = ({ title, value, icon: Icon, color }: { 
-    title: string; 
-    value: string | number; 
-    icon: any; 
-    color: string 
+  const StatCard = ({ title, value, icon: Icon, color }: {
+    title: string;
+    value: string | number;
+    icon: any;
+    color: string
   }) => (
     <motion.div
       whileHover={{ scale: 1.05 }}
@@ -395,11 +395,10 @@ export default function AdminDashboard() {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-md transition-all ${
-                activeTab === tab
+              className={`px-4 py-2 rounded-md transition-all ${activeTab === tab
                   ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white'
                   : 'text-gray-300 hover:text-white hover:bg-white/10'
-              }`}
+                }`}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
             </button>
@@ -452,7 +451,7 @@ export default function AdminDashboard() {
           >
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold text-white">Books Management</h2>
-              <Button 
+              <Button
                 onClick={handleAddBook}
                 className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600"
               >
@@ -488,11 +487,10 @@ export default function AdminDashboard() {
                           <td className="px-6 py-4 text-gray-300">{book.priority || 0}</td>
                           <td className="px-6 py-4">
                             <div className="flex flex-col gap-1">
-                              <span className={`px-2 py-1 text-xs rounded-full ${
-                                book.status === 'PUBLISHED' 
-                                  ? 'bg-green-500/20 text-green-300' 
+                              <span className={`px-2 py-1 text-xs rounded-full ${book.status === 'PUBLISHED'
+                                  ? 'bg-green-500/20 text-green-300'
                                   : 'bg-yellow-500/20 text-yellow-300'
-                              }`}>
+                                }`}>
                                 {book.status}
                               </span>
                               {book.isHidden && (
@@ -504,34 +502,34 @@ export default function AdminDashboard() {
                           </td>
                           <td className="px-6 py-4">
                             <div className="flex space-x-2">
-                              <Button 
-                                size="sm" 
-                                variant="ghost" 
+                              <Button
+                                size="sm"
+                                variant="ghost"
                                 className="text-white hover:bg-white/10"
                                 onClick={() => handleViewBook(book.id)}
                               >
                                 <Eye className="w-4 h-4" />
                               </Button>
-                              <Button 
-                                size="sm" 
-                                variant="ghost" 
+                              <Button
+                                size="sm"
+                                variant="ghost"
                                 className="text-white hover:bg-white/10"
                                 onClick={() => handleEditBook(book)}
                               >
                                 <Edit className="w-4 h-4" />
                               </Button>
-                              <Button 
-                                size="sm" 
-                                variant="ghost" 
+                              <Button
+                                size="sm"
+                                variant="ghost"
                                 className={book.isHidden ? "text-green-400 hover:bg-green-500/20" : "text-gray-400 hover:bg-gray-500/20"}
                                 onClick={() => handleToggleHide(book)}
                                 title={book.isHidden ? "Show book" : "Hide book"}
                               >
                                 {book.isHidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                               </Button>
-                              <Button 
-                                size="sm" 
-                                variant="ghost" 
+                              <Button
+                                size="sm"
+                                variant="ghost"
                                 className="text-red-400 hover:bg-red-500/20"
                                 onClick={() => handleDeleteBook(book.id)}
                               >
@@ -557,7 +555,7 @@ export default function AdminDashboard() {
             className="space-y-6"
           >
             <h2 className="text-2xl font-bold text-white">Users Management</h2>
-            
+
             {loading ? (
               <div className="text-center text-white py-8">Loading...</div>
             ) : (
@@ -581,11 +579,10 @@ export default function AdminDashboard() {
                           <tr key={user.id} className="hover:bg-white/5 transition-colors">
                             <td className="px-6 py-4 text-white">{user.username}</td>
                             <td className="px-6 py-4">
-                              <span className={`px-2 py-1 text-xs rounded-full ${
-                                user.role === 'OWNER' || user.role === 'ADMIN'
+                              <span className={`px-2 py-1 text-xs rounded-full ${user.role === 'OWNER' || user.role === 'ADMIN'
                                   ? 'bg-purple-500/20 text-purple-300'
                                   : 'bg-blue-500/20 text-blue-300'
-                              }`}>
+                                }`}>
                                 {user.role}
                               </span>
                             </td>
@@ -860,11 +857,10 @@ export default function AdminDashboard() {
               </div>
               <div>
                 <span className="text-gray-300">Status: </span>
-                <span className={`px-2 py-1 text-xs rounded-full ${
-                  viewingBook.status === 'PUBLISHED' 
-                    ? 'bg-green-500/20 text-green-300' 
+                <span className={`px-2 py-1 text-xs rounded-full ${viewingBook.status === 'PUBLISHED'
+                    ? 'bg-green-500/20 text-green-300'
                     : 'bg-yellow-500/20 text-yellow-300'
-                }`}>
+                  }`}>
                   {viewingBook.status}
                 </span>
               </div>
@@ -880,9 +876,9 @@ export default function AdminDashboard() {
               </div>
               {viewingBook.fileUrl && (
                 <div>
-                  <a 
-                    href={viewingBook.fileUrl} 
-                    target="_blank" 
+                  <a
+                    href={viewingBook.fileUrl}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="text-purple-400 hover:text-purple-300 underline"
                   >

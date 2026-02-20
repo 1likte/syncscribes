@@ -16,7 +16,7 @@ import {
     ShieldCheck
 } from 'lucide-react'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 
 const socialLinks = [
     { icon: Youtube, href: 'https://www.youtube.com/@chefyunuskalkan', color: 'text-red-500', label: 'YouTube' },

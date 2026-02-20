@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 import { BookOpen, Users, DollarSign, Star, TrendingUp, Calendar } from 'lucide-react'
 import Link from 'next/link'
 

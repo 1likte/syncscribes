@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { Feed } from '@/components/feed/Feed';
 import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
