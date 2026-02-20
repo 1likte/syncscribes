@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
 export async function POST(req: Request) {
     try {
@@ -19,26 +21,30 @@ export async function POST(req: Request) {
             return NextResponse.json({ message: 'No file provided' }, { status: 400 });
         }
 
+        const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
 
-        const uploadDir = type === 'cover' ? 'covers' : 'books';
+        const bucket = type === 'cover' ? 'covers' : 'books';
         const fileName = `${Date.now()}-${file.name.replace(/\s+/g, '_')}`;
+        const filePath = `${session.user.id}/${fileName}`;
 
-        // Ensure path is absolute for fs operations, but relative for public access
-        const publicDir = join(process.cwd(), 'public', 'uploads', uploadDir);
+        const { data, error } = await supabase.storage
+            .from(bucket)
+            .upload(filePath, buffer, {
+                contentType: file.type,
+                upsert: false,
+            });
 
-        // Try to create directory if it doesn't exist
-        try {
-            await mkdir(publicDir, { recursive: true });
-        } catch (e) {
-            // Directory might already exist
+        if (error) {
+            console.error('[SUPABASE_UPLOAD_ERROR]', error);
+            throw new Error(error.message || 'Failed to upload to Supabase Storage');
         }
 
-        const filePath = join(publicDir, fileName);
-        await writeFile(filePath, buffer);
-
-        const publicUrl = `/uploads/${uploadDir}/${fileName}`;
+        const { data: { publicUrl } } = supabase.storage
+            .from(bucket)
+            .getPublicUrl(filePath);
 
         return NextResponse.json({ url: publicUrl });
     } catch (error: any) {
