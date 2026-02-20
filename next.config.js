@@ -2,7 +2,8 @@ const path = require('path');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
+  // Netlify plugin does not support standalone - only use for Docker/Vercel
+  ...(process.env.NETLIFY ? {} : { output: 'standalone' }),
   images: {
     // Add your production image domains here
     domains: process.env.NODE_ENV === 'production'
@@ -23,7 +24,8 @@ const nextConfig = {
   experimental: {
     esmExternals: 'loose',
   },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
+    config.resolve.alias['@'] = path.join(__dirname);
     config.resolve.alias.canvas = false;
     config.resolve.alias.encoding = false;
     config.resolve.alias['pdfjs-dist'] = path.join(__dirname, 'node_modules/pdfjs-dist');
