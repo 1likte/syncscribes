@@ -47,8 +47,16 @@ export async function POST(req: Request) {
             });
 
         if (error) {
-            console.error('[SUPABASE_UPLOAD_ERROR]', error);
-            throw new Error(error.message || 'Failed to upload to Supabase Storage');
+            console.error('[SUPABASE_UPLOAD_ERROR]', {
+                bucket,
+                filePath,
+                contentType,
+                error
+            });
+            return NextResponse.json({
+                message: `Storage Error: ${error.message}`,
+                details: error
+            }, { status: 500 });
         }
 
         const { data: { publicUrl } } = supabase.storage

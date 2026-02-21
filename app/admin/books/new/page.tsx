@@ -53,11 +53,9 @@ export default function NewBookPage() {
                 });
 
                 if (!uploadRes.ok) {
-                    const errorText = await uploadRes.text();
-                    console.error('Upload error:', errorText);
-                    throw new Error('Failed to upload cover image.');
+                    const errorData = await uploadRes.json().catch(() => ({}));
+                    throw new Error(errorData.message || 'Failed to upload cover image.');
                 }
-
                 const { url } = await uploadRes.json();
                 coverUrl = url;
             }
@@ -75,9 +73,9 @@ export default function NewBookPage() {
                 });
 
                 if (!uploadRes.ok) {
-                    throw new Error('Failed to upload PDF file.');
+                    const errorData = await uploadRes.json().catch(() => ({}));
+                    throw new Error(errorData.message || 'Failed to upload PDF file.');
                 }
-
                 const { url } = await uploadRes.json();
                 pdfUrl = url;
             }
