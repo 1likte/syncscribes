@@ -150,16 +150,16 @@ function ChatRoomsContent() {
         <div className="min-h-screen pt-24 pb-12 bg-transparent relative z-10">
             <div className="container mx-auto px-6 max-w-7xl">
                 {/* Compact Header & Search Section */}
-                <div className="flex flex-col md:flex-row items-center md:items-end justify-between gap-6 mb-12">
+                <div className="flex flex-col md:flex-row items-center md:items-end justify-between gap-6 mb-8 md:mb-12">
                     <div className="text-center md:text-left">
                         <motion.h1
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             className="text-4xl md:text-6xl font-black text-foreground tracking-tighter italic"
                         >
-                            CHAT <span className="text-primary">ROOMS</span>
+                            CHAT <span className="text-primary uppercase">Rooms</span>
                         </motion.h1>
-                        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground/40 mt-2">
+                        <p className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] text-muted-foreground/40 mt-2">
                             The Global Pulse // Connect
                         </p>
                     </div>
@@ -306,11 +306,13 @@ function ChatRoomsContent() {
 
             {/* Create Room Modal */}
             {showCreateModal && (
-                <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm p-6">
+                <div className="fixed inset-0 z-[9999] flex items-end md:items-center justify-center bg-black/60 backdrop-blur-md p-0 md:p-6">
                     <motion.div
-                        initial={{ scale: 0.95, opacity: 0, y: 20 }}
-                        animate={{ scale: 1, opacity: 1, y: 0 }}
-                        className="bg-white dark:bg-slate-900 rounded-[2.5rem] w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+                        initial={{ y: "100%" }}
+                        animate={{ y: 0 }}
+                        exit={{ y: "100%" }}
+                        transition={{ type: "spring", damping: 30, stiffness: 300 }}
+                        className="bg-white dark:bg-slate-900 rounded-t-[2.5rem] md:rounded-[2.5rem] w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[92vh]"
                     >
                         <div className="p-8 border-b border-slate-100 dark:border-white/5 flex items-center justify-between">
                             <h2 className="text-3xl font-black italic tracking-tighter">Create <span className="text-primary">Room</span></h2>

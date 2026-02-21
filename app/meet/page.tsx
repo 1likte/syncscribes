@@ -335,31 +335,7 @@ export default function MeetPage() {
                     </motion.div>
                 </AnimatePresence>
 
-                <div className="absolute top-10 left-6 right-6 flex justify-between items-center z-20">
-                    <Link href="/">
-                        <motion.div
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="relative w-10 h-10 flex items-center justify-center p-[2px] bg-gradient-to-br from-primary via-purple-600 to-pink-500 rounded-xl shadow-[0_0_20px_rgba(var(--primary-rgb),0.3)] border-none"
-                        >
-                            <div className="w-full h-full bg-zinc-950 rounded-[10px] flex items-center justify-center overflow-hidden border-none text-white">
-                                <img src="/images/icon.png" alt="S" className="w-6 h-6 object-contain" />
-                            </div>
-                        </motion.div>
-                    </Link>
 
-                    <div className="flex items-center gap-3">
-                        <button
-                            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                            className="p-3 bg-white/20 dark:bg-white/5 backdrop-blur-xl rounded-full text-slate-900 dark:text-white border border-slate-200 dark:border-white/10 shadow-2xl transition-all active:scale-95"
-                        >
-                            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-                        </button>
-                        <div className="px-4 py-2 bg-white/20 dark:bg-white/5 backdrop-blur-xl rounded-full border border-slate-200 dark:border-white/10">
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Live Sync</span>
-                        </div>
-                    </div>
-                </div>
 
                 <motion.div drag dragConstraints={{ left: -300, right: 0, top: 0, bottom: 500 }} className="absolute top-28 right-6 w-24 h-36 bg-slate-100 dark:bg-zinc-800 rounded-2xl border-2 border-slate-200 dark:border-white/20 overflow-hidden z-30 shadow-2xl">
                     {!isVideoOff ? <video ref={localVideoRef} autoPlay muted playsInline className="w-full h-full object-cover mirror scale-x-[-1]" /> : <div className="w-full h-full flex items-center justify-center"><VideoOff size={20} className="text-slate-400 dark:text-white/10" /></div>}

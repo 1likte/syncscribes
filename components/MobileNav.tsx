@@ -154,21 +154,32 @@ export default function MobileNav() {
                 </AnimatePresence>
 
                 <div className="flex items-center justify-between w-full relative z-[130]">
-                    {/* Logo Section - Fades out slightly when searching for more space */}
-                    <div className={`transition-all duration-500 ${showSearch ? 'opacity-0 scale-95 pointer-events-none w-0 h-0 overflow-hidden' : 'opacity-100 scale-100'}`}>
-                        <Logo size="sm" />
-                    </div>
+                    <AnimatePresence mode="wait">
+                        {!showSearch && (
+                            <motion.div
+                                key="logo"
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -10 }}
+                                transition={{ duration: 0.2 }}
+                            >
+                                <Logo size="sm" />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
                     {/* Search & Actions Container */}
-                    <div className={`flex items-center gap-3 transition-all duration-500 ${showSearch ? 'flex-1' : ''}`}>
+                    <div className="flex-1 flex items-center justify-end gap-3 min-w-0">
                         <AnimatePresence>
                             {showSearch && (
                                 <motion.form
-                                    initial={{ opacity: 0, x: 20, width: 0 }}
-                                    animate={{ opacity: 1, x: 0, width: '100%' }}
-                                    exit={{ opacity: 0, x: 20, width: 0 }}
+                                    key="search-form"
+                                    initial={{ opacity: 0, width: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, width: '100%', scale: 1 }}
+                                    exit={{ opacity: 0, width: 0, scale: 0.95 }}
+                                    transition={{ type: "spring", damping: 25, stiffness: 200 }}
                                     onSubmit={handleSearch}
-                                    className="flex-1 flex items-center bg-foreground/[0.03] dark:bg-white/5 backdrop-blur-2xl rounded-2xl px-4 py-2 border border-slate-200 dark:border-white/10"
+                                    className="flex-1 flex items-center bg-foreground/[0.03] dark:bg-white/5 backdrop-blur-2xl rounded-2xl px-4 py-2 border border-slate-200 dark:border-white/10 overflow-hidden"
                                 >
                                     <input
                                         autoFocus
@@ -217,10 +228,10 @@ export default function MobileNav() {
                             className="fixed inset-0 bg-black/5 dark:bg-black/20 backdrop-blur-[2px] z-[130]"
                         />
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 20 }}
-                            transition={{ duration: 0.2, ease: "easeOut" }}
+                            initial={{ opacity: 0, scale: 0.8, y: 40 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.8, y: 40 }}
+                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
                             className="fixed bottom-24 right-5 z-[140] flex flex-col items-center gap-3 py-4"
                         >
                             {expandIcons.map((item, idx) => (
@@ -304,7 +315,7 @@ export default function MobileNav() {
                                             size={24}
                                             strokeWidth={isActive ? 3 : 2}
                                             className={`transition-all duration-300 relative z-10 ${isActive ? item.color : 'text-foreground/40'}`}
-                                            style={isActive ? { 
+                                            style={isActive ? {
                                                 filter: 'drop-shadow(0 0 14px currentColor) drop-shadow(0 0 6px currentColor)',
                                             } : {}}
                                         />
@@ -312,11 +323,11 @@ export default function MobileNav() {
                                 </div>
                                 {/* Label - Only for active */}
                                 {isActive && (
-                                    <motion.span 
+                                    <motion.span
                                         initial={{ opacity: 0, y: -5 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         className={`text-[9px] font-black uppercase tracking-wider transition-all duration-300 ${item.color}`}
-                                        style={{ 
+                                        style={{
                                             textShadow: '0 0 10px currentColor',
                                         }}
                                     >
@@ -377,22 +388,22 @@ export default function MobileNav() {
                                     ease: "easeInOut"
                                 }}
                             >
-                                <Menu 
-                                    size={24} 
-                                    strokeWidth={isMenuOpen ? 3 : 2} 
+                                <Menu
+                                    size={24}
+                                    strokeWidth={isMenuOpen ? 3 : 2}
                                     className={`transition-all duration-300 relative z-10 ${isMenuOpen ? 'text-primary' : 'text-foreground/40'}`}
-                                    style={isMenuOpen ? { 
+                                    style={isMenuOpen ? {
                                         filter: 'drop-shadow(0 0 14px currentColor) drop-shadow(0 0 6px currentColor)',
                                     } : {}}
                                 />
                             </motion.div>
                         </div>
                         {isMenuOpen && (
-                            <motion.span 
+                            <motion.span
                                 initial={{ opacity: 0, y: -5 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 className="text-[9px] font-black uppercase tracking-wider text-primary"
-                                style={{ 
+                                style={{
                                     textShadow: '0 0 10px currentColor',
                                 }}
                             >

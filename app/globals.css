@@ -68,7 +68,7 @@
     -webkit-tap-highlight-color: transparent;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    scroll-behavior: auto;
+    scroll-behavior: smooth;
     overflow-x: hidden;
   }
 
@@ -80,8 +80,9 @@
     overflow-x: hidden;
     overflow-y: auto;
     position: relative;
+    /* Improved inertia scrolling for iOS */
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
+    overscroll-behavior-y: none;
   }
 
   /* Performance optimization for mobile scroll */

@@ -86,8 +86,20 @@ export default function ActivityPage() {
     };
 
     return (
-        <div className="min-h-screen pt-14 md:pt-16 pb-12 bg-background relative z-10">
-            <div className="max-w-[600px] mx-auto px-2 md:px-0">
+        <div className="min-h-screen pt-16 md:pt-24 pb-12 bg-background relative z-10">
+            <div className="max-w-[600px] mx-auto px-4 md:px-0">
+                <div className="mb-6 md:mb-10 px-2">
+                    <motion.h1
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="text-4xl md:text-5xl font-black tracking-tighter italic"
+                    >
+                        THE <span className="text-primary italic">PULSE</span>
+                    </motion.h1>
+                    <p className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-muted-foreground/40 mt-1">
+                        Live Literary Interactions // NOW
+                    </p>
+                </div>
 
                 {/* Stories row */}
                 <div className="px-1 pt-1 pb-4 md:pt-2 md:pb-6">
@@ -152,66 +164,68 @@ export default function ActivityPage() {
                     </div>
                 </div>
 
-                {/* Share story modal */}
                 <AnimatePresence>
                     {showStoryModal && (
-                        <>
+                        <div className="fixed inset-0 z-[150] flex items-end md:items-center justify-center p-0 md:p-4 bg-black/70 backdrop-blur-md">
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 onClick={() => !storySubmitting && setShowStoryModal(false)}
-                                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+                                className="absolute inset-0 z-0"
                             />
                             <motion.div
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.95 }}
-                                className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm bg-background border border-foreground/10 rounded-2xl shadow-2xl z-50 p-6"
+                                initial={{ y: "100%" }}
+                                animate={{ y: 0 }}
+                                exit={{ y: "100%" }}
+                                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                                className="bg-white dark:bg-zinc-950 w-full max-w-xl md:rounded-[3rem] rounded-t-[2.5rem] p-6 md:p-10 shadow-2xl overflow-hidden border-t md:border border-white/10 relative z-10"
                             >
-                                <div className="flex items-center justify-between mb-4">
-                                    <h3 className="text-lg font-black text-foreground">Share story</h3>
-                                    <button onClick={() => !storySubmitting && setShowStoryModal(false)} className="p-2 rounded-lg hover:bg-foreground/5">
+                                <div className="flex items-center justify-between mb-8">
+                                    <h3 className="text-2xl md:text-3xl font-black text-foreground italic tracking-tight">SHARE <span className="text-primary uppercase">Story</span></h3>
+                                    <button onClick={() => !storySubmitting && setShowStoryModal(false)} className="p-2.5 rounded-2xl hover:bg-foreground/5 transition-all active:scale-90">
                                         <X size={20} />
                                     </button>
                                 </div>
                                 {!session ? (
                                     <p className="text-foreground/60 text-sm">Sign in to share a story.</p>
                                 ) : (
-                                    <form onSubmit={handleShareStory} className="space-y-4">
-                                        <div>
-                                            <label className="block text-xs font-bold uppercase tracking-wider text-foreground/60 mb-2">Image *</label>
-                                            <input
-                                                type="file"
-                                                accept="image/*"
-                                                required
-                                                onChange={(e) => setStoryImage(e.target.files?.[0] || null)}
-                                                className="w-full text-sm"
-                                            />
+                                    <form onSubmit={handleShareStory} className="space-y-6">
+                                        <div className="group">
+                                            <label className="block text-[10px] font-black uppercase tracking-widest text-foreground/40 mb-3 ml-1">Cover Image *</label>
+                                            <div className="relative">
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    required
+                                                    onChange={(e) => setStoryImage(e.target.files?.[0] || null)}
+                                                    className="block w-full text-sm text-slate-500 file:mr-4 file:py-3 file:px-6 file:rounded-2xl file:border-0 file:text-[10px] file:font-black file:uppercase file:tracking-widest file:bg-primary/10 file:text-primary hover:file:bg-primary/20 file:transition-all cursor-pointer"
+                                                />
+                                            </div>
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-bold uppercase tracking-wider text-foreground/60 mb-2">Caption (optional)</label>
+                                            <label className="block text-[10px] font-black uppercase tracking-widest text-foreground/40 mb-3 ml-1">The Essence (Caption)</label>
                                             <input
                                                 type="text"
                                                 value={storyText}
                                                 onChange={(e) => setStoryText(e.target.value)}
-                                                placeholder="Add a caption..."
-                                                className="w-full px-4 py-3 rounded-xl border border-foreground/10 bg-transparent text-foreground"
+                                                placeholder="What's the pulse? ..."
+                                                className="w-full px-6 py-4 rounded-[1.5rem] border border-foreground/10 bg-foreground/[0.03] dark:bg-white/[0.03] text-foreground font-medium focus:ring-2 focus:ring-primary/20 outline-none transition-all placeholder:italic placeholder:opacity-30"
                                                 maxLength={150}
                                             />
                                         </div>
                                         <button
                                             type="submit"
                                             disabled={storySubmitting || !storyImage}
-                                            className="w-full py-3 rounded-xl bg-primary text-white font-bold flex items-center justify-center gap-2 disabled:opacity-50"
+                                            className="w-full py-5 rounded-[1.5rem] bg-primary text-white font-black text-[11px] uppercase tracking-[0.3em] flex items-center justify-center gap-3 disabled:opacity-50 shadow-2xl shadow-primary/30 hover:scale-[1.02] active:scale-95 transition-all"
                                         >
-                                            {storySubmitting ? <Loader2 size={18} className="animate-spin" /> : null}
-                                            Share story
+                                            {storySubmitting ? <Loader2 size={18} className="animate-spin" /> : <Plus size={18} strokeWidth={3} />}
+                                            Post Intelligence
                                         </button>
                                     </form>
                                 )}
                             </motion.div>
-                        </>
+                        </div>
                     )}
                 </AnimatePresence>
 
